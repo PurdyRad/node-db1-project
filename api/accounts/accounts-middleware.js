@@ -6,7 +6,6 @@ const checkAccountPayload = (req, res, next) => {
     res.status(400).json({message: "name and budget are required" });
   } else if (typeof name !== "string") {
     res.status(400).json({message: "name of account must be a string"});
-  
   } else if (name.trim().length < 3 || name.trim().length > 100) {
     res.status(400).json({message: "name of account must be between 3 and 100"});
   } else if (typeof budget !== "number") {
@@ -20,10 +19,11 @@ const checkAccountPayload = (req, res, next) => {
 
 const checkAccountNameUnique = (req, res, next) => {
   const {name} = req.body;
-  if (typeof name.trim() !== "undefined") {
-    next();
-  } else {
+  if (typeof name == "undefined") {
     res.status(400).json({ message: "that name is taken" })
+  } else {
+    name.trim()
+    next();
   }
 }
 
